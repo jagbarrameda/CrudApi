@@ -1,16 +1,13 @@
 ﻿using Amazon.CDK;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
-namespace CrudApi
+namespace io.jbarrameda.CrudApi
 {
     sealed class Program
     {
         public static void Main(string[] args)
         {
             var app = new App();
-            new CrudApiStack(app, "CrudApiStack");
+            new SchoolStack(app, "CrudApiStack");
             app.Synth();
         }
     }

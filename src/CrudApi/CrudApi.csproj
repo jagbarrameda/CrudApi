@@ -3,6 +3,9 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>io.jbarrameda.CrudApi</RootNamespace>
+    <Authors>JBarrameda</Authors>
+    <Company>JBarrameda</Company>
   </PropertyGroup>
 
   <ItemGroup>
