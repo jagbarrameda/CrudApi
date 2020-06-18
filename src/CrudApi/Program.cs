@@ -1,4 +1,5 @@
 ﻿using Amazon.CDK;
+using io.jbarrameda.CrudApi.example;
 
 namespace io.jbarrameda.CrudApi
 {
@@ -7,7 +8,7 @@ namespace io.jbarrameda.CrudApi
         public static void Main(string[] args)
         {
             var app = new App();
-            new SchoolStack(app, "CrudApiStack");
+            var schoolStack = new SchoolStack(app, "SchoolAppStack");
             app.Synth();
         }
     }

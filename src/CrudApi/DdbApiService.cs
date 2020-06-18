@@ -11,7 +11,7 @@ namespace io.jbarrameda.CrudApi
         private readonly string _serviceName;
         private Table _table;
 
-        public DdbApiService(SchoolStack stack, string serviceName) : base(stack)
+        public DdbApiService(Stack stack, string serviceName) : base(stack)
         {
             _serviceName = serviceName;
             CreateDdb(stack);

@@ -1,7 +1,6 @@
 using Amazon.CDK;
-using Amazon.CDK.AWS.DynamoDB;
 
-namespace io.jbarrameda.CrudApi
+namespace io.jbarrameda.CrudApi.example
 {
     /**
      * A stack for the backend for a school system.
