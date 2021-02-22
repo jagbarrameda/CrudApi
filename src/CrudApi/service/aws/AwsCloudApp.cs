@@ -16,7 +16,7 @@ namespace io.jbarrameda.CrudApi.service.aws
 
         public void AddApiSet(IApiSet set)
         {
-            throw new System.NotImplementedException();
+            set.CreateResources();
         }
 
         public void Synth()

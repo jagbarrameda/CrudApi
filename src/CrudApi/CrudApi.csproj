@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <RootNamespace>io.jbarrameda.CrudApi</RootNamespace>
     <Authors>JBarrameda</Authors>
     <Company>JBarrameda</Company>
@@ -10,16 +10,16 @@
 
   <ItemGroup>
     <!-- CDK Construct Library dependencies -->
-    <PackageReference Include="Amazon.CDK" Version="1.45.0" />
-    <PackageReference Include="amazon.cdk.aws.apigateway" Version="1.45.0" />
-    <PackageReference Include="Amazon.CDK.AWS.CodeBuild" Version="1.45.0" />
-    <PackageReference Include="Amazon.CDK.AWS.CodeCommit" Version="1.45.0" />
-    <PackageReference Include="Amazon.CDK.AWS.CodeDeploy" Version="1.45.0" />
-    <PackageReference Include="Amazon.CDK.AWS.CodePipeline" Version="1.45.0" />
-    <PackageReference Include="Amazon.CDK.AWS.CodePipeline.Actions" Version="1.45.0" />
-    <PackageReference Include="Amazon.CDK.AWS.DynamoDB" Version="1.45.0" />
-    <PackageReference Include="amazon.cdk.aws.lambda" Version="1.45.0" />
-    <PackageReference Include="Amazon.CDK.AWS.S3" Version="1.45.0" />
+    <PackageReference Include="Amazon.CDK" Version="1.90.1" />
+    <PackageReference Include="amazon.cdk.aws.apigateway" Version="1.90.1" />
+    <PackageReference Include="Amazon.CDK.AWS.CodeBuild" Version="1.90.1" />
+    <PackageReference Include="Amazon.CDK.AWS.CodeCommit" Version="1.90.1" />
+    <PackageReference Include="Amazon.CDK.AWS.CodeDeploy" Version="1.90.1" />
+    <PackageReference Include="Amazon.CDK.AWS.CodePipeline" Version="1.90.1" />
+    <PackageReference Include="Amazon.CDK.AWS.CodePipeline.Actions" Version="1.90.1" />
+    <PackageReference Include="Amazon.CDK.AWS.DynamoDB" Version="1.90.1" />
+    <PackageReference Include="amazon.cdk.aws.lambda" Version="1.90.1" />
+    <PackageReference Include="Amazon.CDK.AWS.S3" Version="1.90.1" />
 
     <!-- jsii Roslyn analyzers (un-comment to obtain compile-time checks for missing required props
     <PackageReference Include="Amazon.Jsii.Analyzers" Version="*" PrivateAssets="all" />
