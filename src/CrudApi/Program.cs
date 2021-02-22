@@ -1,15 +1,14 @@
 ﻿using Amazon.CDK;
-using io.jbarrameda.CrudApi.example;
+using io.jbarrameda.CrudApi.examples.CompeteApp;
 
 namespace io.jbarrameda.CrudApi
 {
-    sealed class Program
+    internal static class Program
     {
         public static void Main(string[] args)
         {
-            var app = new App();
-            var schoolStack = new SchoolStack(app, "SchoolAppStack");
-            app.Synth();
+            var competeApp = new CompeteApp(new App(), "CompeteApp");
+            competeApp.Synth();
         }
     }
 }
