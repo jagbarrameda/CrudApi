@@ -10,18 +10,16 @@ namespace io.jbarrameda.CrudApi.examples.CompeteApp
      */
     public class CompeteApp : AwsCloudApp
     {
-        private DdbCrudApiSet _weightSet;
-
         internal CompeteApp(App app, string id, IStackProps props = null) : base(app, id, props)
         {
             // The code that defines your stack goes here
-            CreateResources(app);
+            CreateResources();
         }
 
-        private void CreateResources(Construct scope)
+        private void CreateResources()
         {
-            _weightSet = new DdbCrudApiSet(this, "Weights");
-            var l = new WidgetService(this, "TheWidgetsService");
+            AddApiSet(new DdbCrudApiSet(this, "Weights"));
+            // var l = new WidgetService(this, "TheWidgetsService");
         }
     }
 }
