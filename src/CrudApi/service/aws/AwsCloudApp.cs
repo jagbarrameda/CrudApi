@@ -33,8 +33,8 @@ namespace io.jbarrameda.CrudApi.service.aws
             {
                 apiSet.CreateResources();
             }
-            // create a dashboard
-            new Dashboard().CreateResources(this, _apiSets);
+            // create a dashboard with all apiSets
+            new Dashboard(this).CreateResources(_apiSets);
         }
 
     }

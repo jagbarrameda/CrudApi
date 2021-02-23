@@ -2,23 +2,28 @@ using System.Collections.Generic;
 using System.Linq;
 using Amazon.CDK;
 using Amazon.CDK.AWS.CloudWatch;
-using AwsDashboard = Amazon.CDK.AWS.CloudWatch.Dashboard;
 
-namespace io.jbarrameda.CrudApi.service
+namespace io.jbarrameda.CrudApi.service.aws
 {
     /**
-     * Creates a dashboard for a IApiService service
+     * Dashboard
      */
-    public class Dashboard
+    public class Dashboard : IDashboard
     {
+        private Construct Scope { get; set; }
+        
+        public Dashboard(Construct scope)
+        {
+            Scope = scope;
+        }
+        
         /// <summary>
         /// Creates the resources for the dashboard based on the APIs.
         /// </summary>
-        /// <param name="scope"></param>
         /// <param name="apis"></param>
-        public void CreateResources(Construct scope, HashSet<IApiSet> apis)
+        public void CreateResources(HashSet<IApiSet> apis)
         {
-            AwsDashboard awsDashboard = new AwsDashboard(scope, "The super dashboard");
+            Amazon.CDK.AWS.CloudWatch.Dashboard awsDashboard = new Amazon.CDK.AWS.CloudWatch.Dashboard(Scope, "The super dashboard");
             AddApiSetWidgets(awsDashboard, apis);
         }
 
@@ -29,7 +34,7 @@ namespace io.jbarrameda.CrudApi.service
         /// </summary>
         /// <param name="awsDashboard"></param>
         /// <param name="apis"></param>
-        private void AddApiSetWidgets(AwsDashboard awsDashboard, HashSet<IApiSet> apis)
+        private void AddApiSetWidgets(Amazon.CDK.AWS.CloudWatch.Dashboard awsDashboard, HashSet<IApiSet> apis)
         {
             foreach (var apiSet in apis)
             {
@@ -37,7 +42,7 @@ namespace io.jbarrameda.CrudApi.service
             }
         }
 
-        private void AddApiWidgets(AwsDashboard awsDashboard, IApiSet apiSet)
+        private void AddApiWidgets(Amazon.CDK.AWS.CloudWatch.Dashboard awsDashboard, IApiSet apiSet)
         {
             // Add apiset header widget
             var apiSetWidgets = new IWidget[]
@@ -59,7 +64,7 @@ namespace io.jbarrameda.CrudApi.service
         /// </summary>
         /// <param name="awsDashboard"></param>
         /// <param name="apiMonitor"></param>
-        private void AddApiWidgets(AwsDashboard awsDashboard, ApiMonitor apiMonitor)
+        private void AddApiWidgets(Amazon.CDK.AWS.CloudWatch.Dashboard awsDashboard, ApiMonitor apiMonitor)
         {
             awsDashboard.AddWidgets(GetWidgets(apiMonitor));
         }
