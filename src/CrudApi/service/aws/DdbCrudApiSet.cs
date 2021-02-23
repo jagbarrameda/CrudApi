@@ -27,40 +27,42 @@ namespace io.jbarrameda.CrudApi.service.aws
             CreateDdb(Stack);
             CreateLambda(Stack);
             CreateApiEndpoints(Stack);
-            CreateApis();
         }
 
-        protected override void CreateApis()
+        public override List<ApiMonitor> GetApiMonitors()
         {
-            Apis.Add(GetStandardApi("Create"));
-            Apis.Add(GetStandardApi("Read"));
-            Apis.Add(GetStandardApi("Update"));
-            Apis.Add(GetStandardApi("Delete"));
+            return new List<ApiMonitor>
+            {
+                GetStandardApiMonitor("Create"),
+                GetStandardApiMonitor("Read"),
+                GetStandardApiMonitor("Update"),
+                GetStandardApiMonitor("Delete")
+            };
         }
 
-        private Api GetStandardApi(string apiName)
+        private ApiMonitor GetStandardApiMonitor(string apiName)
         {
             return new()
             {
-                Name = apiName, DashboardMetrics = GetStandardMetrics()
+                ApiName = apiName, MetricMonitors = GetStandardMetricMonitors()
             };
         }
-        
-        private List<DashboardMetric> GetStandardMetrics()
+
+        private List<MetricMonitor> GetStandardMetricMonitors()
         {
-            return new List<DashboardMetric>
+            return new List<MetricMonitor>
             {
                 new()
                 {
-                    Name = "Availability", Visible = true
+                    MetricName = "Availability", DashboardVisible = true
                 },
                 new()
                 {
-                    Name = "Latency", Visible = true
+                    MetricName = "Latency", DashboardVisible = true
                 },
                 new()
                 {
-                    Name = "Throughput", Visible = true
+                    MetricName = "Throughput", DashboardVisible = true
                 }
             };
         }

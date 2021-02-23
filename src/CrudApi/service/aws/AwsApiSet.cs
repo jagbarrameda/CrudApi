@@ -9,23 +9,26 @@ namespace io.jbarrameda.CrudApi.service.aws
     public abstract class AwsApiSet : IApiSet
     {
         protected readonly Stack Stack;
-        protected List<Api> Apis { get; set; }
 
         protected AwsApiSet(Stack stack)
         {
             Stack = stack;
-            Apis = new List<Api>();
         }
 
+        /// <summary>
+        /// Name of the set of APIs
+        /// </summary>
         public string Name { get; set; }
         
+        /// <summary>
+        /// Creates the resources needed by this set of apis
+        /// </summary>
         public abstract void CreateResources();
 
-        protected abstract void CreateApis();
-        
-        public List<Api> GetApis()
-        {
-            return Apis;
-        }
+        /// <summary>
+        /// Gets the monitors of the APIs
+        /// </summary>
+        /// <returns></returns>
+        public abstract List<ApiMonitor> GetApiMonitors();
     }
 }

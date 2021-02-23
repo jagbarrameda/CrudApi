@@ -18,7 +18,7 @@ namespace io.jbarrameda.CrudApi.service
         /// </summary>
         void CreateResources();
 
-        List<Api> GetApis();
+        List<ApiMonitor> GetApiMonitors();
     }
 
     /// <summary>
@@ -26,49 +26,55 @@ namespace io.jbarrameda.CrudApi.service
     ///
     /// E.g.: a CRUD's get operation. 
     /// </summary>
-    public class Api
+    public class ApiMonitor
     {
-        public String Name { get; init; }
+        /// <summary>
+        /// Name of the API
+        /// </summary>
+        public String ApiName { get; init; }
 
-        public List<DashboardMetric> DashboardMetrics { get; set; }
+        /// <summary>
+        /// Monitors of the metrics of the API
+        /// </summary>
+        public List<MetricMonitor> MetricMonitors { get; set; }
     }
 
     /// <summary>
-    /// A metric in the dashboard.
+    /// Monitors of a metric.
     /// </summary>
-    public class DashboardMetric
+    public class MetricMonitor
     {
         /// <summary>
         /// Name of the metric.
         ///
         /// E.g. Availability, Throughput, Latency
         /// </summary>
-        public String Name { get; set; }
+        public String MetricName { get; set; }
 
         /// <summary>
         /// Description of the metric.
         ///
         /// E.g. percentage of successful requests 
         /// </summary>
-        public String Description { get; set; }
+        public String MetricDescription { get; set; }
 
         /// <summary>
         /// Signals if the metric should show in the dashboard
         /// </summary>
-        public bool Visible { get; set; }
+        public bool DashboardVisible { get; set; }
 
         /// <summary>
         /// The thresholds of the metric.
         ///
         /// E.g. SLA threshold, SLO, SLI
         /// </summary>
-        public List<Threshold> Thresholds { get; set; }
+        public List<Monitor> Monitors { get; set; }
     }
 
     /// <summary>
     /// A threshold of a metric
     /// </summary>
-    public class Threshold
+    public class Monitor
     {
         /// <summary>
         /// If the violation of the threshold should trigger an alarm

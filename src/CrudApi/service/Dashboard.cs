@@ -47,9 +47,9 @@ namespace io.jbarrameda.CrudApi.service
             };
             awsDashboard.AddWidgets(apiSetWidgets);
 
-            foreach (var api in apiSet.GetApis())
+            foreach (var monitor in apiSet.GetApiMonitors())
             {
-                AddApiWidgets(awsDashboard, api);
+                AddApiWidgets(awsDashboard, monitor);
             }
         }
 
@@ -58,41 +58,41 @@ namespace io.jbarrameda.CrudApi.service
         /// The widgets get added in the same row in the dashboard
         /// </summary>
         /// <param name="awsDashboard"></param>
-        /// <param name="api"></param>
-        private void AddApiWidgets(AwsDashboard awsDashboard, Api api)
+        /// <param name="apiMonitor"></param>
+        private void AddApiWidgets(AwsDashboard awsDashboard, ApiMonitor apiMonitor)
         {
-            awsDashboard.AddWidgets(GetWidgets(api));
+            awsDashboard.AddWidgets(GetWidgets(apiMonitor));
         }
 
         /// <summary>
         /// Gets the widgets of an API
         /// </summary>
-        /// <param name="api"></param>
+        /// <param name="apiMonitor"></param>
         /// <returns></returns>
-        private IWidget[] GetWidgets(Api api)
+        private IWidget[] GetWidgets(ApiMonitor apiMonitor)
         {
             var apiWidgets = new List<IWidget>
             {
                 // api header widget
                 new Spacer(new SpacerProps {Height = 2, Width = 24}),
                 new Row(new TextWidget(new TextWidgetProps
-                    {Markdown = "## " + api.Name + " API", Height = 1, Width = 24}))
+                    {Markdown = "## " + apiMonitor.ApiName + " API", Height = 1, Width = 24}))
             };
             // api's metrics' widgets
-            apiWidgets.AddRange(from metric in api.DashboardMetrics where metric.Visible select GetWidget(metric));
+            apiWidgets.AddRange(from metric in apiMonitor.MetricMonitors where metric.DashboardVisible select GetWidget(metric));
             return apiWidgets.ToArray();
         }
 
         /// <summary>
         /// Gets the GraphWidget of a metric
         /// </summary>
-        /// <param name="metric"></param>
+        /// <param name="metricMonitor"></param>
         /// <returns></returns>
-        private IWidget GetWidget(DashboardMetric metric)
+        private IWidget GetWidget(MetricMonitor metricMonitor)
         {
             return new TextWidget(new TextWidgetProps
             {
-                Markdown = "### " + metric.Name,
+                Markdown = "### " + metricMonitor.MetricName,
                 Height = 3
             });
         }
