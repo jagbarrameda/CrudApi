@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Amazon.CDK;
 using Amazon.CDK.AWS.DynamoDB;
 
@@ -15,19 +16,80 @@ namespace io.jbarrameda.CrudApi.service.aws
          * Gets the name of the ddb table
          */
         private string TableName => _serviceName + "Table";
-        
+
         public DdbCrudApiSet(Stack stack, string serviceName) : base(stack)
         {
             _serviceName = serviceName;
         }
-        
+
         public override void CreateResources()
         {
             CreateDdb(Stack);
             CreateLambda(Stack);
             CreateApiEndpoints(Stack);
-            CreateDashboard(Stack);
-            CreateCloudWatchAlarms(Stack);
+            CreateApis();
+        }
+
+        protected override void CreateApis()
+        {
+            Apis.Add(GetCreateApi());
+            Apis.Add(GetReadApi());
+        }
+
+        /// <summary>
+        /// Gets the Create api
+        /// </summary>
+        /// <returns></returns>
+        private Api GetCreateApi()
+        {
+            var metrics = new List<DashboardMetric>
+            {
+                new()
+                {
+                    Name = "Availability", Visible = true
+                },
+                new()
+                {
+                    Name = "Latency", Visible = true
+                },
+                new()
+                {
+                    Name = "Throughput", Visible = true
+                }
+            };
+            var api = new Api
+            {
+                Name = "Create", DashboardMetrics = metrics
+            };
+            return api;
+        } 
+        
+        /// <summary>
+        /// Gets the Create api
+        /// </summary>
+        /// <returns></returns>
+        private Api GetReadApi()
+        {
+            var metrics = new List<DashboardMetric>
+            {
+                new()
+                {
+                    Name = "Availability", Visible = true
+                },
+                new()
+                {
+                    Name = "Latency", Visible = true
+                },
+                new()
+                {
+                    Name = "Throughput", Visible = true
+                }
+            };
+            var api = new Api
+            {
+                Name = "Read", DashboardMetrics = metrics
+            };
+            return api;
         }
 
         /**
@@ -61,23 +123,6 @@ namespace io.jbarrameda.CrudApi.service.aws
         /// </summary>
         /// <param name="scope"></param>
         private void CreateApiEndpoints(Construct scope)
-        {
-        }
-
-        /// <summary>
-        /// Creates the dashboard of the set of crud apis
-        /// </summary>
-        /// <param name="scope"></param>
-        private void CreateDashboard(Construct scope)
-        {
-            var dashboard = new Dashboard(this);
-        }
-
-        /// <summary>
-        /// Creates the alarms for the crud APIs
-        /// </summary>
-        /// <param name="scope"></param>
-        private void CreateCloudWatchAlarms(Construct scope)
         {
         }
     }

@@ -14,8 +14,8 @@ namespace io.jbarrameda.CrudApi
         /// To test, use cdk cli:
         /// cdk ls
         /// cdk synth
-        /// cdk deploy
         /// cdk diff
+        /// cdk deploy
         /// cdk destroy
         ///
         /// see `cdk help`
