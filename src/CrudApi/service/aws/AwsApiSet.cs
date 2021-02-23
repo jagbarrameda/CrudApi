@@ -17,6 +17,8 @@ namespace io.jbarrameda.CrudApi.service.aws
             Apis = new List<Api>();
         }
 
+        public string Name { get; set; }
+        
         public abstract void CreateResources();
 
         protected abstract void CreateApis();

@@ -31,12 +31,28 @@ namespace io.jbarrameda.CrudApi.service
         /// <param name="apis"></param>
         private void AddApiSetWidgets(AwsDashboard awsDashboard, HashSet<IApiSet> apis)
         {
-            foreach (var api in apis.SelectMany(apiSet => apiSet.GetApis()))
+            foreach (var apiSet in apis)
+            {
+                AddApiWidgets(awsDashboard, apiSet);
+            }
+        }
+
+        private void AddApiWidgets(AwsDashboard awsDashboard, IApiSet apiSet)
+        {
+            // Add apiset header widget
+            var apiSetWidgets = new IWidget[]
+            {
+                // api header widget
+                new TextWidget(new TextWidgetProps {Markdown = "# " + apiSet.Name + " API set", Height = 1, Width = 24})
+            };
+            awsDashboard.AddWidgets(apiSetWidgets);
+
+            foreach (var api in apiSet.GetApis())
             {
                 AddApiWidgets(awsDashboard, api);
             }
         }
-        
+
         /// <summary>
         /// Adds the widgets of an API.
         /// The widgets get added in the same row in the dashboard
@@ -55,7 +71,16 @@ namespace io.jbarrameda.CrudApi.service
         /// <returns></returns>
         private IWidget[] GetWidgets(Api api)
         {
-            return (from metric in api.DashboardMetrics where metric.Visible select GetWidget(metric)).ToArray();
+            var apiWidgets = new List<IWidget>
+            {
+                // api header widget
+                new Spacer(new SpacerProps {Height = 2, Width = 24}),
+                new Row(new TextWidget(new TextWidgetProps
+                    {Markdown = "## " + api.Name + " API", Height = 1, Width = 24}))
+            };
+            // api's metrics' widgets
+            apiWidgets.AddRange(from metric in api.DashboardMetrics where metric.Visible select GetWidget(metric));
+            return apiWidgets.ToArray();
         }
 
         /// <summary>
@@ -65,9 +90,10 @@ namespace io.jbarrameda.CrudApi.service
         /// <returns></returns>
         private IWidget GetWidget(DashboardMetric metric)
         {
-            return new TextWidget(new TextWidgetProps()
+            return new TextWidget(new TextWidgetProps
             {
-                Markdown = metric.Name
+                Markdown = "### " + metric.Name,
+                Height = 3
             });
         }
     }

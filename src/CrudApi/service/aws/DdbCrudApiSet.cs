@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using Amazon.CDK;
 using Amazon.CDK.AWS.DynamoDB;
+using Attribute = Amazon.CDK.AWS.DynamoDB.Attribute;
 
 namespace io.jbarrameda.CrudApi.service.aws
 {
@@ -9,17 +11,15 @@ namespace io.jbarrameda.CrudApi.service.aws
      */
     public class DdbCrudApiSet : AwsApiSet
     {
-        private readonly string _serviceName;
-        private Table _table;
-
         /**
          * Gets the name of the ddb table
          */
-        private string TableName => _serviceName + "Table";
+        private string TableName { get; }
 
-        public DdbCrudApiSet(Stack stack, string serviceName) : base(stack)
+        public DdbCrudApiSet(Stack stack, string name) : base(stack)
         {
-            _serviceName = serviceName;
+            Name = name;
+            TableName = Name + "Table";
         }
 
         public override void CreateResources()
@@ -32,45 +32,23 @@ namespace io.jbarrameda.CrudApi.service.aws
 
         protected override void CreateApis()
         {
-            Apis.Add(GetCreateApi());
-            Apis.Add(GetReadApi());
+            Apis.Add(GetStandardApi("Create"));
+            Apis.Add(GetStandardApi("Read"));
+            Apis.Add(GetStandardApi("Update"));
+            Apis.Add(GetStandardApi("Delete"));
         }
 
-        /// <summary>
-        /// Gets the Create api
-        /// </summary>
-        /// <returns></returns>
-        private Api GetCreateApi()
+        private Api GetStandardApi(string apiName)
         {
-            var metrics = new List<DashboardMetric>
+            return new()
             {
-                new()
-                {
-                    Name = "Availability", Visible = true
-                },
-                new()
-                {
-                    Name = "Latency", Visible = true
-                },
-                new()
-                {
-                    Name = "Throughput", Visible = true
-                }
+                Name = apiName, DashboardMetrics = GetStandardMetrics()
             };
-            var api = new Api
-            {
-                Name = "Create", DashboardMetrics = metrics
-            };
-            return api;
-        } 
+        }
         
-        /// <summary>
-        /// Gets the Create api
-        /// </summary>
-        /// <returns></returns>
-        private Api GetReadApi()
+        private List<DashboardMetric> GetStandardMetrics()
         {
-            var metrics = new List<DashboardMetric>
+            return new List<DashboardMetric>
             {
                 new()
                 {
@@ -85,11 +63,6 @@ namespace io.jbarrameda.CrudApi.service.aws
                     Name = "Throughput", Visible = true
                 }
             };
-            var api = new Api
-            {
-                Name = "Read", DashboardMetrics = metrics
-            };
-            return api;
         }
 
         /**
@@ -107,7 +80,7 @@ namespace io.jbarrameda.CrudApi.service.aws
                 BillingMode = BillingMode.PAY_PER_REQUEST,
                 RemovalPolicy = RemovalPolicy.DESTROY
             };
-            _table = new Table(scope, TableName, props);
+            var table = new Table(scope, TableName, props);
         }
 
         /// <summary>

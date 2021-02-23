@@ -11,6 +11,8 @@ namespace io.jbarrameda.CrudApi.service
      */
     public interface IApiSet
     {
+        string Name { get; set; }
+
         /// <summary>
         /// Create infrastructure resources needed by the set of APIs.
         /// </summary>
