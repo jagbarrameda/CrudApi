@@ -63,7 +63,11 @@ namespace io.jbarrameda.CrudApi.service.aws
                 new()
                 {
                     MetricName = "Throughput", DashboardVisible = true
-                }
+                },
+                new()
+                {
+                    MetricName = "Errors", DashboardVisible = true
+                },
             };
         }
 
